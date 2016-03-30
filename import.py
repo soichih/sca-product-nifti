@@ -3,7 +3,7 @@ import os
 import json
 import sys
 import glob
-import requests
+#import requests
 
 #dump env .. for debuggin
 for e in os.environ:
@@ -26,18 +26,22 @@ dir=config["source_dir"]
 #    if file["filename"].endswith(".nii"):
 #        products[] = file
 
-print "posting status update"
-requests.post(os.environ["SCA_PROGRESS_URL"], json={"status":"Searching for .nii"})
+#karst has 2 issues 
+#1 is... I need to do "pip install requests" to use requests
+#2 is that, /N/soft/rhel6/python/2.7.3/lib/python2.7/site-packages/requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request has been made
+#print "posting status update"
+#requests.post(os.environ["SCA_PROGRESS_URL"], json={"status":"Searching for .nii"})
 
 #look for .nii in the source_dir and create symlinks
-files = []
-for file in glob.glob(config["source_dir"]+"/*.nii"):
-    print "../"+config["source_dir"]+"/"+file
-    os.symlink("../"+config["source_dir"]+"/"+file, file) 
-    files.append({"filename": file})
+niifiles = []
+for root, dirs, files in os.walk("../"+config["source_dir"]):
+    for file in files:
+        if file.endswith(".nii"):
+            print file
+            os.symlink("../"+config["source_dir"]+"/"+file, file) 
+            niifiles.append({"filename": file})
 
 #output products.json
 with open('products.json', 'w') as out:
-    json.dump({"files": files}, out)
-
+    json.dump({"type": "nifti", "files": niifiles}, out)
 
