@@ -2,6 +2,7 @@
 import os
 import json
 import sys
+import glob
 import requests
 
 #dump env .. for debuggin
@@ -14,15 +15,22 @@ config=json.loads(config_json)
 
 products = []
 
-for file in config["files"]:
-    #print file["filename"]
-    #print file["type"]
-    status = "Checking "+file["filename"]
-    requests.post(os.environ["SCA_PROGRESS_URL"], data='{"status":"'+status+'"}')
+dir=config["source_dir"]
 
-    #TODO - for now, I am just going to check for file extension.. In the future, I will implement something a bit more capable
-    if file["filename"].endswith(".nii"):
-        products[] = file
+#for file in config["files"]:
+#    #print file["filename"]
+#    #print file["type"]
+#    status = "Checking "+file["filename"]
+##    requests.post(os.environ["SCA_PROGRESS_URL"], data='{"status":"'+status+'"}')
+#
+#    #TODO - for now, I am just going to check for file extension.. In the future, I will implement something a bit more capable
+#    if file["filename"].endswith(".nii"):
+#        products[] = file
+
+requests.post(os.environ["SCA_PROGRESS_URL"], data='{"status":"Searching for .nii"}')
+for file in glob.glob(config["source_dir"]+"/*.nii"):
+    os.symlink("../"+config["source_dir"]+"/"+file, file) 
+    products[] = {"filename": file}
 
 #output products.json
 with open('products.json', 'w') as out:
