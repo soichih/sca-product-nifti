@@ -14,7 +14,7 @@ for e in os.environ:
 config_json=open("config.json").read()
 config=json.loads(config_json)
 
-dir=config["source_dir"]
+dir=config["task_id"]
 
 #for file in config["files"]:
 #    #print file["filename"]
@@ -34,11 +34,11 @@ dir=config["source_dir"]
 
 #look for .nii in the source_dir and create symlinks
 niifiles = []
-for root, dirs, files in os.walk("../"+config["source_dir"]):
+for root, dirs, files in os.walk("../"+dir):
     for file in files:
         if file.endswith(".nii"):
             print file
-            os.symlink("../"+config["source_dir"]+"/"+file, file) 
+            os.symlink("../"+dir+"/"+file, file) 
             niifiles.append({"filename": file})
 
 #output products.json
