@@ -15,7 +15,7 @@ for e in os.environ:
 config_json=open("config.json").read()
 config=json.loads(config_json)
 
-dir=config["task_id"]
+dir=config["source_dir"]
 
 #for file in config["files"]:
 #    #print file["filename"]
@@ -33,7 +33,7 @@ dir=config["task_id"]
 #print "posting status update"
 #requests.post(os.environ["SCA_PROGRESS_URL"], json={"status":"Searching for .nii"})
 
-#look for .nii in the source_dir and create symlinks
+#just look for .nii in the source_dir and create symlinks
 niifiles = []
 for root, dirs, files in os.walk("../"+dir):
     for file in files:
