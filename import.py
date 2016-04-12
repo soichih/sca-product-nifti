@@ -3,6 +3,7 @@ import os
 import json
 import sys
 import glob
+import path
 #import requests
 
 #dump env .. for debuggin
@@ -39,7 +40,7 @@ for root, dirs, files in os.walk("../"+dir):
         if file.endswith(".nii"):
             print file
             os.symlink("../"+dir+"/"+file, file) 
-            niifiles.append({"filename": file})
+            niifiles.append({"filename": file, "size": os.path.getsize("../"+dir+"/"+file)})
 
 #output products.json
 with open('products.json', 'w') as out:
