@@ -42,7 +42,7 @@ for root, dirs, files in os.walk("../"+dir):
             try:
                 os.symlink("../"+dir+"/"+file, file) 
             except OSError, e:
-                if e.errno = errno.EEXIST:
+                if e.errno == errno.EEXIST:
                     print "link already exists.. removing first"
                     os.remove(file)
                     os.symlink("../"+dir+"/"+file, file) 
