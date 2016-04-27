@@ -39,7 +39,14 @@ for root, dirs, files in os.walk("../"+dir):
     for file in files:
         if file.endswith(".nii"):
             print file
-            os.symlink("../"+dir+"/"+file, file) 
+            try:
+                os.symlink("../"+dir+"/"+file, file) 
+            except OSError, e:
+                if e.errno = errno.EEXIST:
+                    print "link already exists.. removing first"
+                    os.remove(file)
+                    os.symlink("../"+dir+"/"+file, file) 
+
             niifiles.append({"filename": file, "size": os.path.getsize("../"+dir+"/"+file)})
 
 #output products.json
