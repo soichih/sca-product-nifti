@@ -5,18 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "import.py"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/soichih/sca-product-nifti.git"
   },
   "author": "Soichi Hayashi <hayashis@iu.edu>",
-  "license": "ISC",
-  "sca": {
-    "label": "Nifti Neuroimaging",
-    "resource_query": "todo..",
-    "bin": {
-        "run": "./import.py"
-    }
-  }
+  "license": "ISC"
 }
