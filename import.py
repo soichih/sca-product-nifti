@@ -40,5 +40,5 @@ for root, dirs, files in os.walk("../"+dir):
 
 #output products.json
 with open('products.json', 'w') as out:
-    json.dump({"type": "nifti", "files": niifiles}, out)
+    json.dump([{"type": "nifti", "files": niifiles}], out)
 
