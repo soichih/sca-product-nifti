@@ -18,27 +18,15 @@ config=json.loads(config_json)
 
 dir=config["source_dir"]
 
-#for file in config["files"]:
-#    #print file["filename"]
-#    #print file["type"]
-#    status = "Checking "+file["filename"]
-##    requests.post(os.environ["SCA_PROGRESS_URL"], data='{"status":"'+status+'"}')
-#
-#    #TODO - for now, I am just going to check for file extension.. In the future, I will implement something a bit more capable
-#    if file["filename"].endswith(".nii"):
-#        products[] = file
-
 #karst has 2 issues 
-#1 is... I need to do "pip install requests" to use requests
-#2 is that, /N/soft/rhel6/python/2.7.3/lib/python2.7/site-packages/requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request has been made
-#print "posting status update"
-#requests.post(os.environ["SCA_PROGRESS_URL"], json={"status":"Searching for .nii"})
+#1. I need to do "pip install requests" to use requests
+#2. (already fixed?) /N/soft/rhel6/python/2.7.3/lib/python2.7/site-packages/requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request has been made
 
-#just look for .nii in the source_dir and create symlinks
+#just look for .nii (or .nii.gz) in the source_dir and create symlinks
 niifiles = []
 for root, dirs, files in os.walk("../"+dir):
     for file in files:
-        if file.endswith(".nii"):
+        if file.endswith(".nii") or file.endswith(".nii.gz"):
             print file
             try:
                 os.symlink("../"+dir+"/"+file, file) 
